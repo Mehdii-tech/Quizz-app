@@ -48,9 +48,11 @@ export default function QuizPage({ ...quiz }) {
 //     </div>
 //   );
 // }
+console.log(quiz.quiz, '6565')
 const Router = useRouter();
 const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-const [state, dispatch] = useContext(QuizContext)
+// const [state, dispatch] = useContext(QuizContext)
+const {state, dispatch} = useContext(QuizContext)
 
 const currentQuestion = quiz.quiz.Question[currentQuestionIndex];
 
@@ -77,6 +79,7 @@ return (
               key={`question-${currentQuestionIndex}`}
               category={currentQuestion.category}
               question={currentQuestion.question}
+              correct_answer={currentQuestion.correct_answer}
               incorrect_answer={currentQuestion.incorrect_answer}
               questionIndicator={`${currentQuestionIndex + 1} / ${quiz.quiz.Question.length}`}
               onSelectAnswer={(answer: string) => setTimeout(() => nextQuestion(answer), 200)}

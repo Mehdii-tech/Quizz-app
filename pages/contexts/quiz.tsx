@@ -5,8 +5,13 @@ interface QuizState {
   questions: any[];
   answers: string[];
 }
+interface IContextProps {
+  state: QuizState;
+  dispatch: ({type}:{type:string}) => void;
+}
 
-export const QuizContext = createContext(null);
+
+export const QuizContext = createContext({} as IContextProps);;
 
 const initialState: QuizState = {
   questions: [],
@@ -25,6 +30,7 @@ const reducer = createReducer<QuizState, any>(initialState, {
 });
 
 export const QuizContextProvider = ({ children, initialStaticState }:any) => {
-  const reducerControl = useReducer(reducer, { ...initialState, ...initialStaticState });
-  return <QuizContext.Provider value={reducerControl}>{children}</QuizContext.Provider>;
+  const [state, dispatch] = useReducer(reducer, { ...initialState, ...initialStaticState });
+  const value = { state, dispatch}
+  return <QuizContext.Provider value={value}>{children}</QuizContext.Provider>;
 };
