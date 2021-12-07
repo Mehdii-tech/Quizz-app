@@ -3,7 +3,6 @@ import he from 'he';
 const QuestionCard = ({
   category,
   question,
-  correct_answer,
   incorrect_answer,
   questionIndicator,
   onSelectAnswer,
@@ -20,12 +19,11 @@ const QuestionCard = ({
       </div>
       <div className="h-full flex  justify-center space-y-5">
         <div className="grid grid-cols-2 gap-2">
-        <button onClick={() => onSelectAnswer(incorrect_answer || correct_answer)} className="w-24 h-24 bg-black hover:bg-black text-white font-bold rounded">
+        
           {incorrect_answer.map(
-            (answer:any) => <> {answer}
+            (answer:any) => <> <button onClick={() => onSelectAnswer(answer)} className="w-24 h-24 bg-black hover:bg-black text-white font-bold rounded">{answer}</button>
            </>)}
-           {correct_answer}
-          </button>
+           
         </div>
       </div>
     </article>
@@ -35,7 +33,6 @@ const QuestionCard = ({
 interface QuestionCardProps {
   category: string;
   question: string;
-  correct_answer: string;
   incorrect_answer:string[];
   questionIndicator: string;
   onSelectAnswer: Function;

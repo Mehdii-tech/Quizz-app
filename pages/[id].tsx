@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import * as Quiz from "../models/Quiz";
 import QuestionCard from "./components/QuestionCard";
 import QuizTimer from "./components/QuizzTimer";
-import { pushAnswer, QuizContext, setQuestions } from "./contexts/quiz";
+import { deleteAnswer, pushAnswer, QuizContext, setQuestions } from "./contexts/quiz";
 
 export default function QuizPage({ ...quiz }) {
 //   const router = useRouter();
@@ -51,19 +51,18 @@ export default function QuizPage({ ...quiz }) {
 console.log(quiz.quiz, '6565')
 const Router = useRouter();
 const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-// const [state, dispatch] = useContext(QuizContext)
 const {state, dispatch} = useContext(QuizContext)
 
 const currentQuestion = quiz.quiz.Question[currentQuestionIndex];
 
-const nextQuestion = (answer: string) => {
-  dispatch(pushAnswer(answer));
-  if (currentQuestionIndex !== quiz.quiz.Question.length - 1) {
-    setCurrentQuestionIndex((prev) => prev + 1);
-  } else {
-    dispatch(setQuestions(quiz.quiz.Question));
-    Router.push('/results');
-  }
+const nextQuestion = (answer: any) => {
+        if (answer==='') { console.log("vide")}else{dispatch(pushAnswer(answer));}
+        if (currentQuestionIndex !== quiz.quiz.Question.length - 1) {
+          setCurrentQuestionIndex(currentQuestionIndex + 1);
+        } else {
+          dispatch(setQuestions(quiz.quiz.Question));
+          Router.push('/results');
+        }
 };
 
 return (
@@ -79,10 +78,9 @@ return (
               key={`question-${currentQuestionIndex}`}
               category={currentQuestion.category}
               question={currentQuestion.question}
-              correct_answer={currentQuestion.correct_answer}
               incorrect_answer={currentQuestion.incorrect_answer}
               questionIndicator={`${currentQuestionIndex + 1} / ${quiz.quiz.Question.length}`}
-              onSelectAnswer={(answer: string) => setTimeout(() => nextQuestion(answer), 200)}
+              onSelectAnswer={(answer: any) => setTimeout(() => nextQuestion(answer), 200)}
             />
           )}
         </div>
