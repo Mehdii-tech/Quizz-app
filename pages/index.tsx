@@ -1,9 +1,13 @@
 import { Router, useRouter } from "next/dist/client/router";
 import Link from "next/link";
+import { useState } from "react";
 import * as Quiz from "../models/Quiz";
+import CreatePopup from "./components/ManageQuizz/Create";
+import Modal from "./components/Modal";
 
 export default function Home({ quizzes }:{quizzes:any[]}) {
   const Router = useRouter()
+  const [showModal, setShowModal] = useState(false);
   console.log(quizzes)
   return (
     <div className="flex h-1/2 w-full items-center justify-center content-center">
@@ -26,6 +30,15 @@ export default function Home({ quizzes }:{quizzes:any[]}) {
       </div>
     </div> 
     </>)}
+      </div>
+      <button className="cursor-pointer" onClick={() => setShowModal(true)}>Open Modal</button>
+      <div className="flex justify-center  content-center pt-20">  
+      <Modal  title={undefined}
+                            onClose={() => setShowModal(false)}
+                            show={showModal}
+                            >
+                           <CreatePopup  />
+      </Modal>
       </div>
     </div>
   );

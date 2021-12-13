@@ -1,0 +1,7 @@
+.wrong-answer::before {
+  content: "❌";
+}
+
+.correct-answer::before {
+  content: "✅";
+}

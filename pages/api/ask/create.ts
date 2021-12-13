@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import * as Quiz from "../../../models/Quiz";
+import * as Question from "../../../models/Quiz";
 
 export default async function handle(req:NextApiRequest, res:NextApiResponse){
     const {   
@@ -13,7 +13,7 @@ export default async function handle(req:NextApiRequest, res:NextApiResponse){
         try{
             res.json({
                 data:{
-                    result: await Quiz.createQuestion(req.body)
+                    result: await Question.createQuestion(req.body)
                 }
             })
 

@@ -1,9 +1,7 @@
-import dynamic from 'next/dynamic';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState, useContext } from 'react';
+import { useContext } from 'react';
 import { Refresh } from './components/animations/Refresh';
-import ResultsCard from './components/ResultCards';
+import ResultsCard from './components/Quizz/ResultCards';
 // import FullConfetti from '../components/FullConfetti';
 import { deleteAnswer, QuizContext } from './contexts/quiz';
 
