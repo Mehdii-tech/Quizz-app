@@ -21,6 +21,7 @@
     "react-dom": "17.0.2",
     "react-use": "^17.3.1",
     "styled-components": "^5.3.3",
+    "swiper": "^7.3.2",
     "tailwindcss": "^2.2.16"
   },
   "devDependencies": {

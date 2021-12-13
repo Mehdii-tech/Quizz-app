@@ -50,18 +50,21 @@ import prisma from '../helpers/prisma'
 //     },
 // ];
 
-export const createQuestion = async({category, type, difficulty, question, correct_answer, incorrect_answer, authorId}:any)=>{
+export const createQuizz = async({title, subject, published, authorId, question}:any)=>{
     console.log(authorId,'yes')
-    const create = await prisma.question.create({
+    const create = await prisma.quizz.create({
       data: {
-        category:category,
-        type:type,
-        difficulty: difficulty,
-        question: question,
-        correct_answer: correct_answer,
-        incorrect_answer: incorrect_answer,
+        title:title,
+        subject:subject,
+        published:published,
+        
+
         // quizz:{connect:{id:quizz.map(quizz=>quizz.id)}},
         User: { connect: { id: authorId } },
+        Question: {
+          connect:
+            question?.map((question: { id: any }) => ({ id: question.id })) || [],
+        }
       },
     })
     console.log(create)

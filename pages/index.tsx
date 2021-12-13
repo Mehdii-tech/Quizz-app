@@ -15,7 +15,7 @@ export default function Home({ quizzes }:{quizzes:any[]}) {
       {quizzes.map(
       (quiz, i) =>
       <>    
-      <div key={i.toString()} onClick={() => Router.push("/[id]", `/${quiz.id}`)} className="max-w-sm rounded overflow-hidden shadow-lg cursor-pointer">
+      <div key={i} onClick={() => Router.push("/[id]", `/${quiz.id}`)} className="max-w-sm rounded overflow-hidden shadow-lg cursor-pointer">
       {/* <img className="w-full" src="/img/card-top.jpg" alt="Sunset in the mountains"></img> */}
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2">{quiz.title}</div>

@@ -1,23 +1,22 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import * as Question from "../../../models/Question";
+import * as Quiz from "../../../models/Quiz";
 
 export default async function handle(req:NextApiRequest, res:NextApiResponse){
     const {   
-        category,
-        type  ,          
-        difficulty ,      
-        question ,        
-        correct_answer  , 
-        incorrect_answer, authorId } = req.body;
+        title,
+        subject,          
+        authorId, published, question } = req.body;
+        console.log(req.body,'eeeee')
     if (req.method=="POST"){
         try{
             res.json({
                 data:{
-                    result: await Question.createQuestion(req.body)
+                    create: await Quiz.createQuizz(req.body)
                 }
             })
 
         }catch(err){
+            console.log(err)
             res.json({error:err})
         }
 
