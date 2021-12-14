@@ -1,18 +1,21 @@
-import { Router, useRouter } from "next/dist/client/router";
-import Link from "next/link";
+import { GetStaticProps, NextPage } from "next";
+import { useRouter } from "next/dist/client/router";
 import { useState } from "react";
 import * as Quiz from "../models/Quiz";
+import * as Question from "../models/Question"
 import CreatePopup from "./components/ManageQuizz/Create";
 import Modal from "./components/Modal";
 
-export default function Home({ quizzes }:{quizzes:any[]}) {
+const Home: NextPage<{
+  quizzes: { title: string; authorId: string; id: number; published: boolean, subject:string }[];
+}> = (props) => {
   const Router = useRouter()
   const [showModal, setShowModal] = useState(false);
-  console.log(quizzes)
+  console.log(props.quizzes)
   return (
     <div className="flex h-1/2 w-full items-center justify-center content-center">
       <div className="grid grid-cols-3 shadow bg-gray-50 p-4 gap-2 rounded-sm">
-      {quizzes.map(
+      {props.quizzes.map(
       (quiz, i) =>
       <>    
       <div key={i} onClick={() => Router.push("/[id]", `/${quiz.id}`)} className="max-w-sm rounded overflow-hidden shadow-lg cursor-pointer">
@@ -37,22 +40,23 @@ export default function Home({ quizzes }:{quizzes:any[]}) {
                             onClose={() => setShowModal(false)}
                             show={showModal}
                             >
-                           <CreatePopup  />
+                           <CreatePopup />
       </Modal>
       </div>
     </div>
   );
 }
 
-export async function getStaticProps() {
+
+export const getStaticProps: GetStaticProps = async () => {
   const quiz = await Quiz.find()
   const quizzes = JSON.parse(JSON.stringify(quiz));
+
   return {
     props: {
       quizzes,
     },revalidate: 10,
   };
-  
-}
+};
 
-
+export default Home;

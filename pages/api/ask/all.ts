@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import * as Question from "../../../models/Quiz";
+import * as Question from "../../../models/Question";
 
 export default async (req:NextApiRequest, res:NextApiResponse) => {
   if (req.method == 'GET') {

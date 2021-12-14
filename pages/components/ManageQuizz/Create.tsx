@@ -1,17 +1,8 @@
 import Image from 'next/image'
+import  SwipeAsks  from './SwipAsks'
 import * as Questions from '../../../models/Question'
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination"
 
-import SwiperCore, {
-    Pagination
-  } from 'swiper';
-  SwiperCore.use([Pagination]);
-
-
-export default function CreatePopup({ asks }:any){
-  console.log(asks,"666666666")
+export default function CreatePopup(){
 
     return(
         <>
@@ -70,21 +61,7 @@ export default function CreatePopup({ asks }:any){
               >
                   Choose your questions for your quizz
               </label>
-              <Swiper direction={'vertical'} pagination={{
-            "clickable": true
-            }} className="mySwiper">
-            <SwiperSlide>
-              {asks.map(
-                (ask:any)=>
-                <>
-                <p className="top-0 left-0">{ask.category}, {ask.type}, {ask.difficulty}</p>
-                <h1>{ask.question}</h1>
-                <p className="bottom-0 right-0">{ask.correct_answer}, {ask.incorrect_answer} </p>
-                </>
-              )}
-
-            </SwiperSlide>
-            </Swiper>
+              <SwipeAsks  />
           </div>
 
 
@@ -100,25 +77,3 @@ export default function CreatePopup({ asks }:any){
     )
 }
 
-// export async function getStaticPaths() {
-//   const question = await Questions.find()
-//   const asks = JSON.parse(JSON.stringify(question));
-// console.log(asks ,'444')
-// return {
-//   paths: asks.map(
-//     (quiz:any) => ({ params: { id: String(quiz.id) } })
-//   ),
-//   fallback: false,
-// };
-// }
-
-export async function getStaticProps() {
-  const question = await Questions.find()
-  const asks = JSON.parse(JSON.stringify(question));
-
-return {
-  props: {
-    asks,
-  },
-}
-}
