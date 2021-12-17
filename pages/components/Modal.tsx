@@ -22,7 +22,7 @@ const Modal = ({ show, onClose, children, title }:any) => {
     
 
     
-      <StyledModalOverlay onClick={handleCloseClick} >
+      <StyledModalOverlay>
         {/* <StyledModal> */}
           <StyledModalHeader >
             {/* <a href="#" onClick={handleCloseClick}>
