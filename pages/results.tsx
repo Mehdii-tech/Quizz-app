@@ -11,12 +11,7 @@ const Results = () => {
   const { questions, answers } = state;
 
   const correctAnswersCount = questions && answers && questions.map((q:any, i:number) => q.correct_answer === answers[i]).filter(Boolean).length;
-  async function clear(){
-  if (state.answers.length>=3){
-    dispatch(deleteAnswer(state.answers))
-  }
-  Router.push('/')
-  }
+
   return (
     
     //   <FullConfetti isOnce={true} />
@@ -30,7 +25,7 @@ const Results = () => {
           </div>
           <div className="flex justify-center py-10">
            
-            <a onClick={()=>clear()} className='cursor-pointer'><Refresh /></a>
+            <a onClick={()=>Router.push('/')} className='cursor-pointer'><Refresh /></a>
             
           </div>
         </div>

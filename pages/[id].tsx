@@ -1,9 +1,9 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import * as Quiz from "../models/Quiz";
 import QuestionCard from "./components/Quizz/QuestionCard";
 import QuizTimer from "./components/Quizz/QuizzTimer";
-import { pushAnswer, QuizContext, setQuestions } from "./contexts/quiz";
+import { deleteAnswer, pushAnswer, QuizContext, setQuestions } from "./contexts/quiz";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 
 const QuizPage: NextPage<{}> = (quiz:any) => {
@@ -11,8 +11,12 @@ console.log(quiz.quiz, '6565')
 const Router = useRouter();
 const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 const {state, dispatch} = useContext(QuizContext)
-
+const [location, setLocation]=useState(Router.pathname)
 const currentQuestion = quiz.quiz.Question[currentQuestionIndex];
+useEffect(() => {
+  console.log(state.answers,'THIS IS THE ANSWERS STATE')
+  state.answers.length!=0 ? dispatch(deleteAnswer(state.answers)): "" ;
+}, [location])
 
 const nextQuestion = (answer: any) => {
         if (answer==='') { console.log("vide")}else{dispatch(pushAnswer(answer));}
