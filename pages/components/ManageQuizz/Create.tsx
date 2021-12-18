@@ -19,7 +19,7 @@ async function create(title:string, subject:string, question:Number[]) {
   }
 }
 
-export default function CreatePopup(){
+export default function CreatePopup({onClose}:any){
   const [title, setTitle]=useState('')
   const [subject, setSubject]=useState('')
   const [question, setQuestion]=useState([])
@@ -38,10 +38,8 @@ export default function CreatePopup(){
 
     return(
         <>
-        <div className="container mx-auto px-4 h-full" >
-        <div className="flex content-center items-center justify-center h-full">
-          <div className="w-full lg:w-4/12 sm:w-7/12 px-4  ">
-            <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300 border-0">
+          
+            <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300 border-0 select-none">
             <Image
                       alt="..."
                       className="flex flex-col mb-6  shadow-l rounded-t-lg bg-gray-300 border-0"
@@ -103,7 +101,7 @@ export default function CreatePopup(){
                         <a
             type='button'
             className="cursor-pointer text-gray-600 pt-3"
-            onClick={()=>router.replace('/')}
+            onClick={()=>onClose()}
           >
             <small className="cursor-pointer text-sm">Cancel</small>
           </a>
@@ -116,9 +114,7 @@ export default function CreatePopup(){
                     </form>
                 </div>
             </div>
-          </div>
-        </div>
-      </div>
+         
       </>
     )
 }

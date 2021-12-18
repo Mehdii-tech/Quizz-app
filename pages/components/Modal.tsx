@@ -1,9 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
-const Modal = ({ show, onClose, children, title }:any) => {
+const Modal = ({ show, onClose, children}:any) => {
     const [isBrowser, setIsBrowser] = useState(true);
-  
+    const modalWrapperRef = useRef<any>();
+
+    // check if the user has clickedinside or outside the modal
+    const backDropHandler = (e:any) => {
+      console.log(modalWrapperRef.current)
+      console.log(!modalWrapperRef?.current?.contains(e.target),"ooo")
+      if (!modalWrapperRef?.current?.contains(e.target) ) {
+          onClose();
+      }
+    }
     // useEffect(() => {
     //   getSession().then((session) => {
     //     if (session) {
@@ -13,25 +22,19 @@ const Modal = ({ show, onClose, children, title }:any) => {
     //     }
     //   });
     // }, []);
-    const handleCloseClick = (e:any) => {
-      e.preventDefault();
-      onClose();
-    };
+
   
     const modalContent = show ? (
     
+      <StyledModalOverlay onClick={(show)=>backDropHandler(show)} >
 
-    
-      <StyledModalOverlay>
-        {/* <StyledModal> */}
-          <StyledModalHeader >
-            {/* <a href="#" onClick={handleCloseClick}>
-              x
-            </a> */}
-          </StyledModalHeader>
-          {title && {title}}
+        <div className="container mx-auto px-4 h-full" >
+        <div className="flex content-center items-center justify-center h-full" >
+        <div className="w-full lg:w-4/12 sm:w-7/12 px-4  " onClick={(show)=>backDropHandler(show)} ref={modalWrapperRef}>
           {children}
-        {/* </StyledModal> */}
+          </div>
+        </div>
+        </div>
       </StyledModalOverlay>
       
     ) : null;
@@ -42,13 +45,6 @@ const Modal = ({ show, onClose, children, title }:any) => {
       return null;
     }
   };
-
-  
-  const StyledModalHeader = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    font-size: 25px;
-  `;
   
   const StyledModalOverlay = styled.div`
     position: absolute;

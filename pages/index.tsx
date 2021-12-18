@@ -36,11 +36,12 @@ const Home: NextPage<{
       </div>
       <button className="cursor-pointer" onClick={() => setShowModal(true)}>Open Modal</button>
       <div className="flex justify-center  content-center pt-20">  
-      <Modal  title={undefined}
+      <Modal  
                             onClose={() => setShowModal(false)}
                             show={showModal}
                             >
-                           <CreatePopup />
+                           <CreatePopup onClose={() => setShowModal(false)} />
+                           
       </Modal>
       </div>
     </div>
