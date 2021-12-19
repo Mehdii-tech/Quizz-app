@@ -11,9 +11,9 @@ import { data } from "autoprefixer";
 
   SwiperCore.use([Pagination]);
 
-export default function SwipeAsks(){
+export default function SwipeAsks({handleCheckboxChange}:any){
     const [questions, setQuestions] = useState<[]>([]);
-    const [checked, setChecked]=useState([{Number}])
+    // const [checked, setChecked]=useState([{"id":""}])
     useEffect(() => {
       const fetchData = async () => {
         const res = await fetch(
@@ -24,8 +24,9 @@ export default function SwipeAsks(){
       };
       fetchData();
     }, []);
+
     console.log(questions,'ozozozooz')
-    console.log(checked,'list of questions')
+    
     return(
         <Swiper direction={'horizontal'} pagination={{
             "clickable": true
@@ -36,12 +37,12 @@ export default function SwipeAsks(){
                 <>
                 <SwiperSlide key={i}>
                   <div className="p-3 bg-blue-200 rounded-lg">
-                    <div className="bg-white p-6 rounded-2xl shadow-lg w-full  mx-auto">
-                      <div className="inline-flex">
+                    <div className="bg-white p-6 rounded-2xl shadow-lg w-full flex-row mx-auto">
+                      <div className="inline-flex ">
                       <h2 className="font-bold mb-2 text-xl text-gray-800">{ask.type}</h2>
-                        <input type="checkbox" className="form-checkbox h-5 w-5 text-gray-600 justify-content-end" value={ask.id} onClick={()=>setChecked(ask.id)}/>
+                        <input type="checkbox" className="form-checkbox h-5 w-5 text-gray-600 mx-auto  cursor-pointer" value={ask.id}  onChange={handleCheckboxChange}/>
                       </div> 
-                        <p className="text-gray-700">{ask.question}</p>
+                        <p className="text-gray-700 font-bold">{ask.question}?</p>
                         <span className="text-gray-700">correct answer <p className="italic font-bold">{ask.correct_answer}</p> incorrect answer <p className="italic font-bold">{ask.incorrect_answer.join(', ')}</p></span>
                         <div className="pt-4 pb-2">
                         <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 cursor-pointer">{ask.difficulty}</span>

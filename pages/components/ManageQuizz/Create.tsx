@@ -4,7 +4,7 @@ import * as Questions from '../../../models/Question'
 import router from 'next/router'
 import { useState } from 'react'
 
-async function create(title:string, subject:string, question:Number[]) {
+async function create(title:string, subject:string, question: { id: string }[]) {
   const response = await fetch('/api/quizz/create', {
     method: 'POST',
     body: JSON.stringify({ title, subject, question}),
@@ -22,12 +22,28 @@ async function create(title:string, subject:string, question:Number[]) {
 export default function CreatePopup({onClose}:any){
   const [title, setTitle]=useState('')
   const [subject, setSubject]=useState('')
-  const [question, setQuestion]=useState([])
+  const [checked, setChecked]=useState([{"id":""}])
+  const handleCheckboxChange = (event:any):any => {
+    let newArray: any[] 
+    if (checked.some(e=>e.id === "")){
+      newArray = [{ id: event.target.value}];
+    }else{
+      newArray = [...checked, { id: event.target.value}];
+    }
+    if (checked.some(e=>e.id === event.target.value)) {
+      console.log('yes')
+      newArray = newArray.filter(e => e.id !== event.target.value);
+    }
+    setChecked(
+      newArray
+    );
+  };
+  console.log(checked,'list of questions')
   async function submitHandler(){
-      if (title && subject && question){
+      if (title && subject && checked){
         try {
-          console.log(title, subject, question)
-          const response = await create(title, subject, question);
+          console.log(title, subject, checked)
+          const response = await create(title, subject, checked);
           console.log(response)
           router.replace('/')
         } catch (error) {
@@ -91,7 +107,7 @@ export default function CreatePopup({onClose}:any){
               >
                   Choose your questions for your quizz
               </label>
-              <SwipeAsks  />
+              <SwipeAsks handleCheckboxChange={handleCheckboxChange} />
           </div>
           <div className="text-center mt-6">
               <button                           className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
