@@ -21,8 +21,11 @@ const QuestionCard = ({
         <div className="grid grid-cols-2 gap-2">
         
           {incorrect_answer.map(
-            (answer:any) => <> <button onClick={() => onSelectAnswer(answer)} className="w-24 h-24 bg-black hover:bg-black text-white font-bold rounded">{answer}</button>
-           </>)}
+            (answer:any, i:number) => 
+            <div key={i}>
+             <button onClick={() => onSelectAnswer(answer)} className="w-24 h-24 bg-black hover:bg-black text-white font-bold rounded">{answer}</button>
+            </div>
+           )}
            
         </div>
       </div>
